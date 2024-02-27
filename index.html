@@ -20,8 +20,8 @@
 <script src="./code/modules/accessibility.js"></script>
 
     
-            <!-- BARRA LATERAL-->
-            <div class="container">
+<div class="container">
+    <!-- BARRA LATERAL-->
                 <aside>
                     <div class="top">
                         <div class="logo">
@@ -34,225 +34,97 @@
         
                    
                     <div class="sidebar">
-                        <a href="#"><span class="material-icons-round">dashboard</span>
+                        <a href="#dashboard" class="active" id="linkDashboard"><span class="material-icons-round">dashboard</span>
                             <h4>Dashboard</h4>
                        </a>
         
-                      <a href="#" class="active"><span class="material-icons-round">dashboard_customize</span>
+                      <a href="#configuration" id="linkConfiguration"><span class="material-icons-round">dashboard_customize</span>
                         <h4>Configuración</h4>
                        </a>
                     </div>
         
         
                 </aside>
-            
             <!-- FIN BARRA LATERAL -->
 
             <!-- SECCIÓN PRINCIPAL-->
-<main>
-    <h1>Dashboard</h1>
-
-   <!-- <div class="date">
-        <input type="date">
-   </div>-->
-   <div><input type="button" onclick="startConnect()" value="Conectar"></div>
-
-    <div class="insights">
+    <main>
+        <div id="dashboard">
+            <h1>Dashboard</h1>
         
-        <div class="iluminacion">
-            <div class="logo1"><span class="material-icons-round">lightbulb</span></div>
-            <div class="middle"><div class="left">
-                <h3>Iluminación</h3>
-                <h1>100%</h1>
-            </div>
-            <div class="progress">
-               <!-- <svg>
-                    <circle cx='38' cy='38' r='36'></circle> 
-                </svg>-->
-             <figure class="highcharts-figure">
-                    <div id="container-speed" class="chart-container"></div></figure>
-           <!-- <div class="number">
-                <p>100%</p>
-            </div>-->
-            </div>
-            </div>
-            <small class="text-muted">Sala Conferencia</small>
-        </div>
-
-        <div class="temperatura">
-            <div class="logo1"><span class="material-icons-round">device_thermostat</span></div>
-            <div class="middle"><div class="left">
-                <h3>Temperatura</h3>
-                <h1>25°C</h1>
-            </div>
-            </div>
-            <small class="text-muted">Sala Conferencia</small>
-        </div>
+        <div><input type="button" onclick="startConnect()" value="Conectar" class="button_connect"></div>
         
-        <div class="ventanas">
-            <div class="logo1"><span class="material-icons-round">window</span></div>
-            <div class="middle"><div class="left">
-                <h3>Ventanas</h3>
-                <h1>Cerradas</h1>
-                <h5 id="inventanas"> Estado ventanas </h5>
+            <div class="insights">
+                
+                <div id="iluminacion" class="iluminacion">
+                    <div class="logo1"><span class="material-icons-round">lightbulb</span></div>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Iluminación</h3>
+                            <h1>100%</h1>
+                        </div>
+                    <div class="progress">
+                    <figure class="highcharts-figure">
+                            <div id="container-speed" class="chart-container">
+                            </div>
+                    </figure>
+                    </div>
+                    </div>
+                    <small class="text-muted">Sala Conferencia</small>
+                </div>
+        
+                <div id="temperatura" class="temperatura">
+                    <div class="logo1"><span class="material-icons-round">device_thermostat</span></div>
+                    <div class="middle"><div class="left">
+                        <h3>Temperatura</h3>
+                        <h1>25°C</h1>
+                    </div>
+                    </div>
+                    <small class="text-muted">Sala Conferencia</small>
+                </div>
+                
+                <div id="ventanas" class="ventanas">
+                    <div class="logo1"><span class="material-icons-round">window</span></div>
+                    <div class="middle"><div class="left">
+                        <h3>Ventanas</h3>
+                        <h1>Cerradas</h1>
+                        <h5 id="inventanas"> Estado ventanas </h5>
+                    </div>
+                    <div class="number">
+                        <p>25°C</p>
+                    </div>
+                    </div>
+                    <small class="text-muted">Sala Conferencia</small>
+                </div>
+
             </div>
-            <div class="number">
-                <p>25°C</p>
-            </div>
-            </div>
-            <small class="text-muted">Sala Conferencia</small>
         </div>
 
+        <div id="configuration">
+            <div id="configuracion" class="configuracion">
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Iluminación</span>
+                    <button id="btnIluminacion"></button>
+                </div>
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Temperatura</span>
+                    <button id="btnTemperatura"></button>
+                </div>
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Ventanas</span>
+                    <button id="btnVentanas"></button>
+                </div>
+            </div>
 
-
-    </div>
-</main>
-    
-
-
-
-
+        </div>
+    </main>
 </div>
 
 
 
 
-
-<script type="text/javascript">
-
-
-function startConnect(){
-    clientID = "clientID - "+parseInt(Math.random()*100);
-    //host =  "test.mosquitto.org"; 
-    //host="91.121.93.94"; //ip mosquitto
-    host="192.168.0.102";
-    //port = "8081";
-    port="8081";
-    client = new Paho.MQTT.Client(host,Number(port),clientID);
-    
-    client.onMessageArrived = onMessageArrived;
-    console.log(host + " " + port + " " + clientID);
-//    client.onConnectionLost = onConnectionLost;
-   
-client.connect({
-       onSuccess: onConnect
-    })
-}
-
-function onConnect(){
-    topic= "outTopicunexfm";
-    console.log("suscrito");
-    client.subscribe(topic);
-}
-
-var num;
- function onMessageArrived(message){
-    //console.log(message.payloadString);
-    num = message.payloadString;
-    document.getElementById("inventanas").innerHTML = num;
-    
-}
-
-setInterval(function(){
-    console.log(num);
-},3000);
-    
-
-
-//CÓDIGO HIGHCHARTS
-var gaugeOptions = {
-    chart: {
-        type: 'solidgauge'
-    },
-
-    title: null,
-
-    pane: {
-        center: ['50%', '85%'],
-        size: '140%',
-        startAngle: -90,
-        endAngle: 90,
-        background: {
-            backgroundColor:
-                Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-            innerRadius: '60%',
-            outerRadius: '100%',
-            shape: 'arc'
-        }
-    },
-
-    exporting: {
-        enabled: false
-    },
-
-    tooltip: {
-        enabled: false
-    },
-
-    // the value axis
-    yAxis: {
-        stops: [
-            [0.1, '#55BF3B'], // green
-            [0.5, '#DDDF0D'], // yellow
-            [0.9, '#DF5353'] // red
-        ],
-        lineWidth: 0,
-        tickWidth: 0,
-        minorTickInterval: null,
-        tickAmount: 2,
-        title: {
-            y: -70
-        },
-        labels: {
-            y: 16
-        }
-    },
-
-    plotOptions: {
-        solidgauge: {
-            dataLabels: {
-                y: 5,
-                borderWidth: 0,
-                useHTML: true
-            }
-        }
-    }
-};
-
-// The speed gauge
-var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
-    yAxis: {
-        min: 0,
-        max: 200,
-        title: {
-            text: 'Speed'
-        }
-    },
-
-    credits: {
-        enabled: false
-    },
-
-   /* series: [{
-        name: 'Speed',
-        data: [80],
-        dataLabels: {
-            format:
-                '<div style="text-align:center">' +
-                '<span style="font-size:25px">{y}</span><br/>' +
-                '<span style="font-size:12px;opacity:0.4">km/h</span>' +
-                '</div>'
-        },
-        tooltip: {
-            valueSuffix: ' km/h'
-        }
-    }]*/
-
-}));
-
-
-
-    </script>
+<script src="./control-cartas.js"></script>
+<script src="./script.js"></script>
 
 </body>
 </html>
