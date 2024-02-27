@@ -34,13 +34,11 @@
     box-sizing: border-box;
 }
 
-html{
-    font-size: 14px;
-}
+
 
 body{
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     font-family: poppins, sans-serif;
     font-size: 0.88rem;
     background: var(--color-background);
@@ -51,8 +49,6 @@ body{
 
 .container{
     display: grid;
-    width: 96%;
-    margin: 0 auto;
     background: white;
     gap: 1.8rem;
     grid-template-columns: 14rem auto 23rem;
@@ -106,6 +102,10 @@ b{
 
 .success{
     color: var(--color-success);
+}
+
+.button_connect {
+    cursor: pointer;
 }
 
 .warning{
@@ -329,7 +329,62 @@ main .insights svg circle {
  .highcharts-data-table tr:hover {
      background: #f1f7ff;
  }
- 
+
+ .hidden {
+    display: none;
+}
+
+.configuration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.configuracion {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.configuracion div {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+button img {
+    width: 34px;
+    height: auto;
+    transition: opacity 0.5s ease;
+}
+
+button img.hidden {
+    opacity: 0;
+}
+
+.label {
+    font-size: 16px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.configuracion-interna {
+    display: flex;
+    justify-content: space-between;
+}
+
  @media (max-width: 600px) {
      .highcharts-figure,
      .highcharts-data-table table {

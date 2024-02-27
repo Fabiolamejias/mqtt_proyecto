@@ -1,10 +1,3 @@
-const permisos = [
-    {
-        id: 1,
-        nombre: "ver"
-    }
-]
-
 document.addEventListener('DOMContentLoaded', function () {
     var linkDashboard = document.getElementById('linkDashboard');
     var linkConfiguration = document.getElementById('linkConfiguration');
@@ -34,6 +27,10 @@ document.addEventListener('DOMContentLoaded', function () {
     linkConfiguration.addEventListener('click', function (event) {
         changeContent.call(this, event, contentConfiguration, contentDashboard);
     });
+
+    new CardComponent('iluminacion', 'btnIluminacion');
+    new CardComponent('temperatura', 'btnTemperatura');
+    new CardComponent('ventanas', 'btnVentanas');
 });
 
 

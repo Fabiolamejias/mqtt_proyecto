@@ -52,11 +52,11 @@
         <div id="dashboard">
             <h1>Dashboard</h1>
         
-        <div><input type="button" onclick="startConnect()" value="Conectar"></div>
+        <div><input type="button" onclick="startConnect()" value="Conectar" class="button_connect"></div>
         
             <div class="insights">
                 
-                <div class="iluminacion">
+                <div id="iluminacion" class="iluminacion">
                     <div class="logo1"><span class="material-icons-round">lightbulb</span></div>
                     <div class="middle">
                         <div class="left">
@@ -73,7 +73,7 @@
                     <small class="text-muted">Sala Conferencia</small>
                 </div>
         
-                <div class="temperatura">
+                <div id="temperatura" class="temperatura">
                     <div class="logo1"><span class="material-icons-round">device_thermostat</span></div>
                     <div class="middle"><div class="left">
                         <h3>Temperatura</h3>
@@ -83,7 +83,7 @@
                     <small class="text-muted">Sala Conferencia</small>
                 </div>
                 
-                <div class="ventanas">
+                <div id="ventanas" class="ventanas">
                     <div class="logo1"><span class="material-icons-round">window</span></div>
                     <div class="middle"><div class="left">
                         <h3>Ventanas</h3>
@@ -101,7 +101,20 @@
         </div>
 
         <div id="configuration">
-            <h1>Configuración del sistema</h1>
+            <div id="configuracion" class="configuracion">
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Iluminación</span>
+                    <button id="btnIluminacion"></button>
+                </div>
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Temperatura</span>
+                    <button id="btnTemperatura"></button>
+                </div>
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Ventanas</span>
+                    <button id="btnVentanas"></button>
+                </div>
+            </div>
 
         </div>
     </main>
@@ -110,6 +123,7 @@
 
 
 
+<script src="./control-cartas.js"></script>
 <script src="./script.js"></script>
 
 </body>
