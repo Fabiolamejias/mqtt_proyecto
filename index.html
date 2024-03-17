@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Domótica</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script> <!--PAHO MQTT-->
-    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"> ICONOS ONLINE-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script> 
+    <!--PAHO MQTT-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- ICONOS ONLINE -->
     <link type="text/css" rel="stylesheet" href="../mqtt_proyecto/css/estilos.css"/>
     <link rel="stylesheet" href="./style.css" type="text/css">
 </head>
@@ -43,9 +46,15 @@ HIGHCHARTS
                       <a href="#configuration" id="linkConfiguration"><span class="material-icons-round">dashboard_customize</span>
                         <h4>Configuración</h4>
                        </a>
+
+                       <a href="#controlAcceso" id="linkAcceso"><span class="material-icons-round">dashboard_customize</span>
+                        <h4>Control de acceso</h4>
+                       </a>
+
                     </div>
+                    
         
-        
+
                 </aside>
             <!-- FIN BARRA LATERAL -->
 
@@ -63,10 +72,13 @@ HIGHCHARTS
                     <div class="middle">
                         <div class="left">
                             <h3>Iluminación</h3>
-                            <h1 id="ilum"><h1>%</h1></h1>
+                            <div class="flex-percentage">
+                                <h1 id="ilum"></h1>
+                                <h1>%</h1>
+                            </div>
                         </div>
                     <div class="progress">
-                        <input type="range" id="barra" min="0" max="100" step="1" oninput="guardarValor(this.value)">
+                        <input type="range" id="barra" style="background-color: rgb(222, 222, 222);" min="0" max="100" step="1" oninput="guardarValor(this.value)">
                    <!--<figure class="highcharts-figure">
                             <div id="container-speed" class="chart-container">
                             </div>
@@ -90,14 +102,68 @@ HIGHCHARTS
                     <div class="logo1"><span class="material-icons-round">window</span></div>
                     <div class="middle"><div class="left">
                         <h3>Ventanas</h3>
-                        <h5>1: <h5 id="v1"></h5></h5>                        
-                        <h5>2: <h5 id="v2"></h5></h5>
-                        <h5>3: <h5 id="v3"></h5></h5>
-                        <h5>4: <h5 id="v4"></h5></h5>
-                        <h5>5: <h5 id="v5"></h5></h5>
-                        <h5>6: <h5 id="v6"></h5></h5>
-                        <h5>7: <h5 id="v7"></h5></h5>
-                        <h5>8: <h5 id="v8"></h5></h5>
+                        <div class="flex-window">
+                            <h5>1:</h5><h5 id="v1"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>2:</h5><h5 id="v2"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>3:</h5><h5 id="v3"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>4:</h5><h5 id="v4"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>5:</h5><h5 id="v5"></h5>
+                        </div>
+                        <div class="flex-window">
+                        <h5>6:</h5><h5 id="v6"></h5>
+                        </div>
+                        <div class="flex-window">
+                        <h5>7:</h5><h5 id="v7"></h5>
+                        </div>
+                        <div class="flex-window">
+                        <h5>8:</h5><h5 id="v8"></h5>
+                        </div>
+                        
+                        <h5 id="inventanas"> Estado ventanas </h5>
+                    </div>
+                   <!-- <div class="number">
+                        <p>25°C</p>
+                    </div>-->
+                    </div>
+                    <small class="text-muted">Sala Conferencia</small>
+                </div>
+
+                <div id="puertas" class="puertas">
+                    <div class="logo1"><span class="material-icons-round">window</span></div>
+                    <div class="middle"><div class="left">
+                        <h3>Puertas</h3>
+                        <div class="flex-window">
+                            <h5>1:</h5><h5 id="v1"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>2:</h5><h5 id="v2"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>3:</h5><h5 id="v3"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>4:</h5><h5 id="v4"></h5>
+                        </div>
+                        <div class="flex-window">
+                            <h5>5:</h5><h5 id="v5"></h5>
+                        </div>
+                        <div class="flex-window">
+                        <h5>6:</h5><h5 id="v6"></h5>
+                        </div>
+                        <div class="flex-window">
+                        <h5>7:</h5><h5 id="v7"></h5>
+                        </div>
+                        <div class="flex-window">
+                        <h5>8:</h5><h5 id="v8"></h5>
+                        </div>
                         
                         <h5 id="inventanas"> Estado ventanas </h5>
                     </div>
@@ -125,9 +191,20 @@ HIGHCHARTS
                     <span class="label">Toggle Ventanas</span>
                     <button id="btnVentanas"></button>
                 </div>
+                <div class="configuracion-interna">
+                    <span class="label">Toggle Puertas</span>
+                    <button id="btnPuertas"></button>
+                </div>
             </div>
 
         </div>
+
+        <div id="controlAcceso">
+            Soy acceso a cntrolllfffff
+            shiiiiiiiiiiiii
+        </div>
+
+
     </main>
 </div>
 

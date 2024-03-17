@@ -14,37 +14,62 @@ function guardarValor(valor) {
 document.addEventListener('DOMContentLoaded', function () {
     var linkDashboard = document.getElementById('linkDashboard');
     var linkConfiguration = document.getElementById('linkConfiguration');
+    var linkAccesoControl = document.getElementById('linkAcceso');
     var contentDashboard = document.getElementById('dashboard');
     var contentConfiguration = document.getElementById('configuration');
+    var contentAcceso = document.getElementById('controlAcceso');
 
-    function changeContent(event, contentToShow, contentToHide) {
+    // Agrega todos los contenidos en un array para facilitar su manejo
+    var allContents = [contentDashboard, contentConfiguration, contentAcceso];
+
+    function changeContent(event, contentToShow) {
         event.preventDefault();
 
-        contentToShow.style.display = 'block';
-        contentToHide.style.display = 'none';
+        // Oculta todos los contenidos excepto el que se quiere mostrar
+        allContents.forEach(function(content) {
+            if(content !== contentToShow) {
+                content.style.display = 'none';
+            }
+        });
 
+        // Muestra el contenido deseado
+        contentToShow.style.display = 'block';
+
+        // Actualiza la clase 'active' para el enlace actual y la remueve de los demás
         if (!this.classList.contains('active')) {
             this.classList.add('active');
             if (this === linkDashboard) {
                 linkConfiguration.classList.remove('active');
-            } else {
+                linkAccesoControl.classList.remove('active');
+            } else if (this === linkConfiguration) {
                 linkDashboard.classList.remove('active');
+                linkAccesoControl.classList.remove('active');
+            } else { // Aquí asumimos que es linkAccesoControl
+                linkDashboard.classList.remove('active');
+                linkConfiguration.classList.remove('active');
             }
         }
     }
 
     linkDashboard.addEventListener('click', function (event) {
-        changeContent.call(this, event, contentDashboard, contentConfiguration);
+        changeContent.call(this, event, contentDashboard);
     });
 
     linkConfiguration.addEventListener('click', function (event) {
-        changeContent.call(this, event, contentConfiguration, contentDashboard);
+        changeContent.call(this, event, contentConfiguration);
     });
 
+    linkAccesoControl.addEventListener('click', function (event) {
+        changeContent.call(this, event, contentAcceso);
+    });
+
+    // Suponiendo que CardComponent está definido en otro lugar de tu código
     new CardComponent('iluminacion', 'btnIluminacion');
     new CardComponent('temperatura', 'btnTemperatura');
     new CardComponent('ventanas', 'btnVentanas');
+    new CardComponent('puertas', 'btnPuertas');
 });
+
 
 
 
