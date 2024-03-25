@@ -1,16 +1,3 @@
-//Barra deslizante luz
-var valorBarra;
-
-function guardarValor(valor) {
-
-    valorBarra=valor;
-    //console.log(valorBarra);
-    document.getElementById("ilum").innerHTML = valorBarra;     
-
-        publishMessage(); 
-   
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     var linkDashboard = document.getElementById('linkDashboard');
     var linkConfiguration = document.getElementById('linkConfiguration');
@@ -74,6 +61,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 /*Codigo Fabiola*/
+/*
+function recargar(){
+    let datosGuardados = JSON.parse(localStorage.getItem('datos'));
+    
+    
+    if(datosGuardados){
+    datosGuardados.forEach(dato=>{
+        agregarDato(dato);
+    });
+}}*/
+
+
+//Barra deslizante luz
+var valorBarra;
+
+function guardarValor(valor) {
+
+    valorBarra=valor;
+    //console.log(valorBarra);
+    document.getElementById("ilum").innerHTML = valorBarra;     
+
+        publishMessage();    
+}
+
+
+function agregarDato(dato) {
+    const lista = document.getElementById('listaDatos');
+    const nuevoElemento = document.createElement('li');
+    nuevoElemento.textContent = dato;
+    lista.appendChild(nuevoElemento);
+    
+ /*   let datosGuardados = JSON.parse(localStorage.getItem('datos'));
+    datosGuardados.push(dato);
+    localStorage.setItem('datos',JSON.stringify(datosGuardados));
+*/
+}
+
+
+/*COMUNICACIÓN MQTT*/
 
 function startConnect() {
     clientID = "clientID - " + parseInt(Math.random() * 100);
@@ -98,25 +124,36 @@ function startConnect() {
 
 function onConnect() {
     controlLuz = "controlLuz";
-    controlAcceso = "controlAcceso";
+    ca_hora = "ca_hora";
+    ca_usuario = "ca_usuario";
     ventanas="ventanas";
+    puerta="puerta";
 
+    client.subscribe(puerta);
     client.subscribe(controlLuz);
-    client.subscribe(controlAcceso);
+    client.subscribe(ca_usuario);
+    client.subscribe(ca_hora);
     client.subscribe(ventanas);
     console.log("suscrito");
 }
 
 var num;
+var dia;
+var mes;
+var hora;
+var min;
+var usuario;
 
 function onMessageArrived(message) {
-    console.log("hola6");
-    console.log('Mensaje Recibido en topico:',message.destinationName,'Message: ',message.payloadString);
+    
 
+    console.log("hola9S");
+   
     switch(message.destinationName){
     
         case controlLuz:
-        
+            console.log('Mensaje Recibido en topico:',message.destinationName,'Message: ',message.payloadString);
+
             var i0=message.payloadString[0];
             var i1=message.payloadString[1];
             var i2=message.payloadString[2];
@@ -146,23 +183,30 @@ function onMessageArrived(message) {
         
         break;
             
-        case controlAcceso:
-            var usuario=message.payloadString[0];
+        case ca_usuario:
+            console.log('Mensaje Recibido en topico:',message.destinationName,'Message: ',message.payloadString);
 
-            var d1=message.payloadString[1];
-            var d=message.payloadString[2];
+        usuario=message.payloadString[0];
+
+        break;
+
+        case ca_hora:
+            console.log('Mensaje Recibido en topico:',message.destinationName,'Message: ',message.payloadString);
+
+            var d1=message.payloadString[0];
+            var d=message.payloadString[1];
                 var d2=parseInt(d,10);
 
-            var m1=message.payloadString[3];
-            var m=message.payloadString[4];
+            var m1=message.payloadString[2];
+            var m=message.payloadString[3];
                 var m2=parseInt(m,10);
             
-            var h1=message.payloadString[5];
-            var h=message.payloadString[6];
+            var h1=message.payloadString[4];
+            var h=message.payloadString[5];
                 var h2=parseInt(h,10); 
             
-            var min1=message.payloadString[7];
-            var mi=message.payloadString[8];
+            var min1=message.payloadString[6];
+            var mi=message.payloadString[7];
                 var min2=parseInt(mi,10);
 
             var dia= (d1*10)+d2;
@@ -170,7 +214,31 @@ function onMessageArrived(message) {
             var hora=(h1*10)+h2;
             var min=(min1*10)+min2;
 
-            console.log("Ingresó usuario "+usuario+" Fecha: "+dia+"/"+mes+ " Hora: "+hora+":"+min);
+            if(usuario>=1){console.log("Ingresó usuario "+usuario+" Fecha: "+dia+"/"+mes+ " Hora: "+hora+":"+min);
+            var dato = "Ingresó usuario "+usuario+" Fecha: "+dia+"/"+mes+ " Hora: "+hora+":"+min;
+        }
+
+            if(usuario==0){console.log("Clave incorrecta. Fecha: "+dia+"/"+mes+ " Hora: "+hora+":"+min);
+            var dato = "Clave incorrecta. Fecha: "+dia+"/"+mes+ " Hora: "+hora+":"+min;}
+            
+                    agregarDato(dato);
+
+
+
+
+            /*
+            var miVariable='1';
+            fetch('conexion_bbdd.php',{
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/x-www-form-urlencoded',
+                },
+                body:'miVariable='+miVariable,
+            })
+            .then(response=>{
+                console.log('Variable guardada en la base de datos');
+            });
+            */
 
         break;
 
@@ -206,9 +274,15 @@ function onMessageArrived(message) {
             var vent8=message.payloadString[7];
                 if(vent8=='0'){document.getElementById("v8").innerHTML = "Abierta";}
                 if(vent8=='1'){document.getElementById("v8").innerHTML = "Cerrada";}
-
-
         break;
+
+        case puerta:
+            console.log('Mensaje Recibido en topico:',message.destinationName,'Message: ',message.payloadString);
+
+            var puertappal=message.payloadString[0];
+                if(puertappal=='0'){document.getElementById("Puerta").innerHTML = "Abierta";}
+                if(puertappal=='1'){document.getElementById("Puerta").innerHTML = "Cerrada";}
+
 }
 
 }

@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     
     <!-- ICONOS ONLINE -->
-    <link type="text/css" rel="stylesheet" href="../mqtt_proyecto/css/estilos.css"/>
+    <link type="text/css" rel="stylesheet" href="../mqtt_proyecto.2/css/estilos.css"/>
     <link rel="stylesheet" href="./style.css" type="text/css">
 </head>
 </head>
-<body>
+<body onload="startConnect();">
 
 <!--
 HIGHCHARTS    
@@ -42,13 +42,14 @@ HIGHCHARTS
                         <a href="#dashboard" class="active" id="linkDashboard"><span class="material-icons-round">dashboard</span>
                             <h4>Dashboard</h4>
                        </a>
-        
-                      <a href="#configuration" id="linkConfiguration"><span class="material-icons-round">dashboard_customize</span>
-                        <h4>Configuración</h4>
+
+                       <a href="#controlAcceso" id="linkAcceso"><span class="material-icons-round">login</span>
+                        <h4>Control de acceso</h4>
                        </a>
 
-                       <a href="#controlAcceso" id="linkAcceso"><span class="material-icons-round">dashboard_customize</span>
-                        <h4>Control de acceso</h4>
+                       
+                       <a href="#configuration" id="linkConfiguration"><span class="material-icons-round">dashboard_customize</span>
+                        <h4>Configuración</h4>
                        </a>
 
                     </div>
@@ -63,7 +64,8 @@ HIGHCHARTS
         <div id="dashboard">
             <h1>Dashboard</h1>
         
-        <div><input type="button" onclick="startConnect()" value="Conectar" class="button_connect"></div>
+        <!--Botón de "conectar"-->
+        <!--<div><input type="button" onclick="startConnect()" value="Conectar" class="button_connect"></div>-->
         
             <div class="insights">
                 
@@ -88,8 +90,8 @@ HIGHCHARTS
                     <small class="text-muted">Sala Conferencia</small>
                 </div>
         
-                <div id="temperatura" class="temperatura">
-                    <div class="logo1"><span class="material-icons-round">device_thermostat</span></div>
+                <div id="pres" class="pres">
+                    <div class="logo1"><span class="material-icons-round">person</span></div>
                     <div class="middle"><div class="left">
                         <h3>Presencia</h3>
                         <h1 id="Presencia"></h1>
@@ -137,35 +139,11 @@ HIGHCHARTS
                 </div>
 
                 <div id="puertas" class="puertas">
-                    <div class="logo1"><span class="material-icons-round">window</span></div>
+                    <div class="logo1"><span class="material-icons-round">meeting_room</span></div>
                     <div class="middle"><div class="left">
                         <h3>Puertas</h3>
-                        <div class="flex-window">
-                            <h5>1:</h5><h5 id="v1"></h5>
-                        </div>
-                        <div class="flex-window">
-                            <h5>2:</h5><h5 id="v2"></h5>
-                        </div>
-                        <div class="flex-window">
-                            <h5>3:</h5><h5 id="v3"></h5>
-                        </div>
-                        <div class="flex-window">
-                            <h5>4:</h5><h5 id="v4"></h5>
-                        </div>
-                        <div class="flex-window">
-                            <h5>5:</h5><h5 id="v5"></h5>
-                        </div>
-                        <div class="flex-window">
-                        <h5>6:</h5><h5 id="v6"></h5>
-                        </div>
-                        <div class="flex-window">
-                        <h5>7:</h5><h5 id="v7"></h5>
-                        </div>
-                        <div class="flex-window">
-                        <h5>8:</h5><h5 id="v8"></h5>
-                        </div>
-                        
-                        <h5 id="inventanas"> Estado ventanas </h5>
+                        <h1 id="Puerta"></h1>   
+                        <h5 id="inventanas"> Estado puerta </h5>
                     </div>
                    <!-- <div class="number">
                         <p>25°C</p>
@@ -184,7 +162,7 @@ HIGHCHARTS
                     <button id="btnIluminacion"></button>
                 </div>
                 <div class="configuracion-interna">
-                    <span class="label">Toggle Temperatura</span>
+                    <span class="label">Toggle Presencia</span>
                     <button id="btnTemperatura"></button>
                 </div>
                 <div class="configuracion-interna">
@@ -199,9 +177,13 @@ HIGHCHARTS
 
         </div>
 
+
+
+
+        <!-- PAGINA CONTROL ACCESO -->
         <div id="controlAcceso">
-            Soy acceso a cntrolllfffff
-            shiiiiiiiiiiiii
+            <h1>Control Usuarios:</h1>
+            <ul id="listaDatos"></ul>
         </div>
 
 
